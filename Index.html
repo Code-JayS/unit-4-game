@@ -1,111 +1,73 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Mega Man: The Game</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap File -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-
-
-    <!-- JQuery -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery.js"></script>
-
+    <title>Crystal Collector</title>
 </head>
 
-<body>
+<body style="background-image: url(./assets/images/gold_scale_@2X.png)">
+    <source id="my_audio" src="./assets/audio/01 - Trip Like I Do.mp3" loop="loop"></audio>
 
-    <!-- Overall Bootstrap Grid -->
     <div class="container">
-
-        <!-- Jumbotron with Title -->
         <div class="jumbotron">
-            <h1 class="text-center">
-                <strong>Mega Man</strong>
-            </h1>
-            <hr>
-            <div id="musicControls" class="text-center">
-                <button class="btn btn-warning btn-xs theme-button">
-                    <span class="fa fa-music"></span> Play Theme!</button>
-                <button class="btn btn-dark btn-xs pause-button">
-                    <span class="fa fa-pause"></span> Pause Song</button>
+            <header class="title text-center">
+                <h1>Crystal Collector</h1>
+            </header>
+            <div class="instructions">
+                <h5>You will be given a target number at the start of the game.</h5>
+                <h5>There are four crystals below. By clicking a crystal you will add a specific amount of points
+                    towards your total score.</h5>
+                <h5>The value of each cystal is hidden from you. &#40Watch your score to figure out the value of the
+                    crystal!&#41</h5>
+                <h5>Each time the game starts the game will change the value of each crystal.</h5>
+
+
             </div>
-
-        </div>
-        <div class="row">
-
-            <div class="col-lg-6">
-
-                <!-- Controls (Superpower Grow/Shrink)-->
-                <div id="sizeControls" class="card">
-                    <h4 class="card-header">Superpowers - Change Sizes!</h4>
-                    <div class="card-body">
-                        <div class="text-center">
-                            <button class="btn btn-dark btn-lg normal-button">
-                                <span class="fa fa-ok"></span> Normal</button>
-                            <button class="btn btn-primary btn-lg grow-button">
-                                <span class="fa fa-plus"></span> Grow</button>
-                            <button class="btn btn-danger btn-lg shrink-button">
-                                <span class="fa fa-minus"></span> Shrink</button>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2 class="card-title" id="targetScore">Target Score: var</h2>
+                            <h2 class="card-title" id="playerScore">Current Score: 0</h2>
                         </div>
                     </div>
                 </div>
-
-                <!-- Controls (Superpower Visibility) -->
-                <div id="visibilityControls" class="card">
-                    <h4 class="card-header">Superpowers - Invisiblity!</h4>
-                    <div class="card-body">
-                        <div class="text-center">
-                            <button class="btn btn-dark btn-lg vis-button">
-                                <span class="fa fa-eye"></span> Visible</button>
-                            <button class="btn btn-info btn-lg invis-button">
-                                <span class="fa fa-eye-slash"></span> Invisible</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Controls (Superpower Move Controls) -->
-                <div id="moveControls" class="card">
-                    <h4 class="card-header">Move Controls</h4>
-                    <div class="card-body">
-                        <div class="text-center mb-1">
-                            <button class="btn btn-dark btn-lg fa fa-arrow-up up-button">Up</button>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-dark btn-lg fa fa-arrow-left left-button">Left</button>
-                            <button class="btn btn-dark btn-lg fa fa-arrow-down down-button">Down</button>
-                            <button class="btn btn-dark btn-lg fa fa-arrow-right right-button">Right</button>
-                        </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn btn-dark btn-lg pew-button">
-                                <span class="fa fa-comment"></span> Pew Pew!</button>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title" id="wins">Wins</h3>
+                            <h3 class="card-title" id="losses">Losses</h3>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="text-white">
+                <div class="d-flex justify-content-between p-5" id = "crystalcontainer">
 
-
-
-            <!-- Base Game (player and enemy)-->
-            <div class="col-lg-6">
-                <div class="player" position absolute >
-                <img src="./assets/images/megaman_weapon_sheet.png" alt="" class="img mega-man"
-                    style="position:absolute; top:50px; left: 80px; z-index: -20; height: 300px">
-                    <img src="./assets/images/megaman_weapon_sheet.png" alt="" class="img mega-man"
-                    style="position:absolute; top:50px; left: 80px; z-index: -10; height: 100px">
-
+                    <button class="btn btn-default" id="emerald">
+                        <img src="./assets/images/emerald.png" width="100" height="150" />
+                    </button>
+                    <button class="btn btn-default" id="sapphire">
+                        <img src="./assets/images/sapphire.png" width="100" height="150" />
+                    </button>
+                    <button class="btn btn-default" id="ruby">
+                        <img src="./assets/images/ruby.png" width="100" height="150" />
+                    </button>
+                    <button class="btn btn-default" id="gold">
+                        <img src="./assets/images/gold.png" width="100" height="150" />
+                    </button>
                 </div>
+
             </div>
-        </div>
-     
 
-    <script src="./assets/javascript/game.js"></script>
 
-        
-    </script>
+            <script src="./assets/javascript/game.js"></script>
+
 
 </body>
 

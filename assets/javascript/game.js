@@ -1,149 +1,90 @@
-$(document).ready(function () {
-    var megaMan = $(".mega-man");
-    var later = dothis
-    var music = {
-        select: "./assets/audio/01_Stage Select.mp3",
-        chosen: "./assets/audio/02_Enemy Chosen.mp3",
-        iceBeat: "./assets/audio/03 Ice Man.mp3",
-        fireBeat: "./assets/audio/04 Fire Man.mp3",
-        bombBeat: "./assets/audio/05 Bomb Man.mp3",
-        gutsBeat: "./assets/audio/06 Guts Man.mp3",
-        cutBeat: "./assets/audio/07 Cut Man.mp3",
-        elecBeat: "./assets/audio/08 Elec Man.mp3",
-        victory: "./assets/audio/10 Victory!.mp3",
-        megaBeat: "./assets/audio/11 Dr. Wily's Castle.mp3",
-        Beat: "./assets/audio/Epilogue.mp3",
+var wins = 0;
+console.log(wins);
+var losses = 0;
+console.log(losses);
+var targetScore = 0;
+console.log(targetScore);
+var currentScore = 0;
+console.log(currentScore);
+var crystals = [];
+const ruby = 0;
+const emerald = 1;
+const sapphire = 2;
+const gold = 3;
+const dark = 4;
+
+var rubyNoise = new Audio("./assets/audio/OOT_SilverRupee1.wav");
+var sapphireNoise = new Audio("./assets/audio/TP_Get_Rupee_Blue.wav");
+var emeraldNoise = new Audio("./assets/audio/TP_Rupee_Land.wav");
+var goldNoise = new Audio("./assets/audio/OOT_SilverRupee4.wav");
+var darkCrystalNoise = new Audio("./assets/audio/01 - Trip Like I Do.mp3");
+
+
+function crystalValues() {
+    for (let i = 0; i < 5; i++) {
+        let value = (Math.floor(Math.random() * 7) + 3);
+        crystals[i] = value;
+    }
+    console.log(crystals)
+}
+function addValues(clickCrystal) {
+    currentScore += clickCrystal;
+    $("#playerScore").text("Collected " + currentScore);
+    if (currentScore === targetScore) {
+        wins++;
+        newRound();
+    }
+    else if (currentScore > targetScore) {
+        losses++;
+        newRound();
+    }
+    else {
+        console.log(currentScore)
+    }
+}
+function secret() {
+    if (wins === 4) {
+        $("#crystalcontainer").append('<button class="btn btn-default" id="darkCrystal"><img src="./assets/images/darkCrystal.png" width="100" height="150" /></button>');
 
     }
-
-    var characters = {
-        iceMan: {
-            health: 28,
-            weak: electric,
-            noise: music.icebeat,
-            attack: 2,
-            weapon: [iceSlasher],
-        },
-        fireMan: {
-            health: 28,
-            weak: iceSlasher,
-            noise: music.firebeat,
-            attack: 2,
-            weapon: [fireStorm],
-        },
-        bombMan: {
-            health: 28,
-            weak: fireStorm,
-            noise: music.bombBeat,
-            attack: 2,
-            weapon: [hyperBomb],
-        },
-        gutsMan: {
-            health: 28, 
-            weak: hyperBomb,
-            noise: music.bombBeat,
-            attack: 2,
-            weapon: [superArm],
-        },
-        cutMan: {
-            health: 28,
-            weak: superArm,
-            noise: music.cutBeat,
-            attack: 2,
-            weapon: [rollingCutters],
-        },
-        elecMan: {
-            health: 28, 
-            weak: rollingCutters, 
-            noise: music.elecBeat,
-            attack: 2, 
-            weapon: [thunderBeam],
-        },
-        copyMan: {
-            health: 28,
-            weak: fireStorm, 
-            noise: music.megaBeat,
-            attack: 1,
-            weapon: [megaBuster],
-        },
-
-    }
-
-    var audioElement = document.createElement("audio");
-    audioElement.setAttribute("src", music.victory)
+}
 
 
+function targetValue() {
+    targetScore = (Math.floor(Math.random() * 101) + 19);
+    console.log(targetScore);
+}
+function newRound() {
+    crystals = [];
+    currentScore = 0;
+    crystalValues();
+    targetValue();
+    secret();
+    $("#wins").text("WINS   " + wins);
+    $("#losses").text("LOSSES " + losses);
+    $("#targetScore").text("Collect this Many " + targetScore);
 
-    // Theme Button
-    $(".theme-button").on("click", function () {
-        audioElement.play();
-    });
-    $(".pause-button").on("click", function () {
-        audioElement.pause();
-    });
+}
+$("#ruby").on("click", function () {
+    addValues(crystals[ruby]);
+    rubyNoise.play()
 
-    // Size Buttons
-    $(".normal-button").on("click", function () {
-        megaMan.animate({ height: "200px" });
-    });
-    $(".grow-button").on("click", function () {
-        megaMan.animate({ left: 0, height: "1000px" });
-    });
-    $(".shrink-button").on("click", function () {
-        megaMan.animate({ height: "100px" });
-    });
-
-    // Visibility Buttons
-    $(".vis-button").on("click", function () {
-        megaMan.animate({ opacity: "1" });
-    });
-    $(".invis-button").on("click", function () {
-        megaMan.animate({ opacity: "0.05" });
-    });
-
-    // Move Buttons
-    $(".up-button").on("click", function () {
-        megaMan.animate({ top: "-=200px" }, "normal");
-    });
-    $(".down-button").on("click", function () {
-        megaMan.animate({ top: "+=200px" }, "normal");
-    });
-    $(".left-button").on("click", function () {
-        megaMan.animate({ left: "-=200px" }, "normal");
-    });
-    $(".right-button").on("click", function () {
-        megaMan.animate({ left: "+=200px" }, "normal");
-    });
-    $(".pew-button").on("click", function () {
-        megaMan.animate({ top: "50px", left: "80px" }, "fast");
-    });
-
-    // Keyboard move controls
-    $(document).keyup(function (e) {
-        switch (e.which) {
-
-            // Move Buttons (Keyboard Down)
-            case 40:
-                megaMan.animate({ top: "+=200px" }, "normal");
-                break;
-
-            // Move Buttons (Keyboard Right)
-            case 39:
-                megaMan.animate({ left: "+=200px" }, "normal");
-                break;
-
-            // Move Buttons (Keyboard Up)
-            case 38:
-                megaMan.animate({ top: "-=200px" }, "normal");
-                break;
-
-            // Move Buttons (Keyboard Left)
-            case 37:
-                megaMan.animate({ left: "-=200px" }, "normal");
-                break;
-
-            default:
-                break;
-        }
-    });
 });
+$("#emerald").on("click", function () {
+    addValues(crystals[emerald]);
+    emeraldNoise.play();
+});
+$("#sapphire").on("click", function () {
+    addValues(crystals[sapphire]);
+    sapphireNoise.play();
+});
+$("#gold").on("click", function () {
+    addValues(crystals[gold]);
+    goldNoise.play();
+});
+$("#darkCrystal").on("click", function () {
+    addValues(crystals[dark]);
+    darkCrystalNoise.play();
+});
+
+newRound();
