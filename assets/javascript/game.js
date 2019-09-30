@@ -22,7 +22,7 @@ var darkCrystalNoise = new Audio("./assets/audio/01 - Trip Like I Do.mp3");
 
 function crystalValues() {
     for (let i = 0; i < 5; i++) {
-        let value = (Math.floor(Math.random() * 7) + 3);
+        let value = (Math.floor(Math.random() * 10) + 2);
         crystals[i] = value;
     }
     console.log(crystals)
@@ -43,10 +43,18 @@ function addValues(clickCrystal) {
     }
 }
 function secret() {
-    if (wins === 4) {
-        $("#crystalcontainer").append('<button class="btn btn-default" id="darkCrystal"><img src="./assets/images/darkCrystal.png" width="100" height="150" /></button>');
+    if (wins === 1) {
+        var test = $('<button class = "btn btn-default"><img src="./assets/images/darkCrystal.png" width="70" height="120" /></button>').click(function () {
+            addValues(crystals[dark]);
+            darkCrystalNoise.play();
+        });
+        $("#crystalContainer div:last").append('<div></div>').find("div:last").prepend(test);
 
-    }
+    };
+    //     $selectors = $('<button/>').addClass('btn btn-default').attr('id','darkCrystal').appendTo($crystalcontainer);
+    //     $("#darkCrystal").append('<img src="./assets/images/darkCrystal.png" width="100" height="150" />');
+
+    // }
 }
 
 
