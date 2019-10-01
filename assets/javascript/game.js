@@ -43,12 +43,12 @@ function addValues(clickCrystal) {
     }
 }
 function secret() {
-    if (wins === 1) {
+    if (wins === 3 && losses == 0) {
         var test = $('<button class = "btn btn-default"><img src="./assets/images/darkCrystal.png" width="70" height="120" /></button>').click(function () {
             addValues(crystals[dark]);
             darkCrystalNoise.play();
         });
-        $("#crystalContainer div:last").append('<div></div>').find("div:last").prepend(test);
+        $("#crystalContainer").append('<div></div>').find("div:last").prepend(test);
 
     };
     //     $selectors = $('<button/>').addClass('btn btn-default').attr('id','darkCrystal').appendTo($crystalcontainer);
