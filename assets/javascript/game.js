@@ -11,7 +11,7 @@ const ruby = 0;
 const emerald = 1;
 const sapphire = 2;
 const gold = 3;
-const dark = 4;
+const dark = 0;
 
 var rubyNoise = new Audio("./assets/audio/OOT_SilverRupee1.wav");
 var sapphireNoise = new Audio("./assets/audio/TP_Get_Rupee_Blue.wav");
@@ -21,12 +21,20 @@ var darkCrystalNoise = new Audio("./assets/audio/01 - Trip Like I Do.mp3");
 
 
 function crystalValues() {
-    for (let i = 0; i < 5; i++) {
-        let value = (Math.floor(Math.random() * 10) + 2);
+    for (let i = 0; i < 4; i++) {
+        let value = (Math.floor(Math.random() * 11) + 1);
         crystals[i] = value;
+
+    }
+    var iseven = crystals.every(function (j) {
+        return j % 2 === 0;
+    });
+    if (iseven = true) {
+        crystals[0] += 1
     }
     console.log(crystals)
 }
+
 function addValues(clickCrystal) {
     currentScore += clickCrystal;
     $("#playerScore").text("Collected " + currentScore);
@@ -42,13 +50,14 @@ function addValues(clickCrystal) {
         console.log(currentScore)
     }
 }
-function secret() {
-    if (wins === 3 && losses == 0) {
-        var test = $('<button class = "btn btn-default"><img src="./assets/images/darkCrystal.png" width="70" height="120" /></button>').click(function () {
-            addValues(crystals[dark]);
+//if user wins the first three times displays easter egg crystal.
+function eaterEgg() {
+    if (wins === 3 && losses === 0) {
+        var egg = $('<button class = "btn btn-default"><img src="./assets/images/darkCrystal.png" width="70" height="120" /></button>').click(function () {
+            addValues(crystals[dark] + 10);
             darkCrystalNoise.play();
         });
-        $("#crystalContainer").append('<div></div>').find("div:last").prepend(test);
+        $("#crystalContainer").append('<div></div>').find("div:last").prepend(egg);
 
     };
     //     $selectors = $('<button/>').addClass('btn btn-default').attr('id','darkCrystal').appendTo($crystalcontainer);
@@ -67,7 +76,7 @@ function newRound() {
     currentScore = 0;
     crystalValues();
     targetValue();
-    secret();
+    eaterEgg();
     $("#wins").text("WINS   " + wins);
     $("#losses").text("LOSSES " + losses);
     $("#targetScore").text("Collect this Many " + targetScore);
@@ -90,9 +99,9 @@ $("#gold").on("click", function () {
     addValues(crystals[gold]);
     goldNoise.play();
 });
-$("#darkCrystal").on("click", function () {
-    addValues(crystals[dark]);
-    darkCrystalNoise.play();
-});
+// $("#darkCrystal").on("click", function () {
+//     addValues(crystals[dark]);
+//     darkCrystalNoise.play();
+// });
 
 newRound();
