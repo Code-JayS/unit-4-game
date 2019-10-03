@@ -18,19 +18,29 @@ var sapphireNoise = new Audio("./assets/audio/TP_Get_Rupee_Blue.wav");
 var emeraldNoise = new Audio("./assets/audio/TP_Rupee_Land.wav");
 var goldNoise = new Audio("./assets/audio/OOT_SilverRupee4.wav");
 var darkCrystalNoise = new Audio("./assets/audio/01 - Trip Like I Do.mp3");
-
+var isEven = true;
 
 function crystalValues() {
+    // for( let i=0; i < 4; i++) {
+    //     let value = i*2 + i*3 + 2;
+    //     crystals[i]= value;
+    //     console.log(crystals)
+    // }
     for (let i = 0; i < 4; i++) {
         let value = (Math.floor(Math.random() * 11) + 1);
         crystals[i] = value;
-
+        console.log(crystals)
     }
-    var iseven = crystals.every(function (j) {
-        return j % 2 === 0;
+    isEven = true;
+    crystals.every(function (j) {
+        if (j % 2 !== 0) {
+            isEven = false;
+        }
+
     });
-    if (iseven = true) {
+    if (isEven === true) {
         crystals[0] += 1
+        console.log(crystals)
     }
     console.log(crystals)
 }
